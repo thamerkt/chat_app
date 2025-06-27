@@ -165,7 +165,7 @@ const ChatComponent = ({
     };
 
     fetchChatRoomsAndReceivers();
-  }, [isEquipmentChat, user?.user_id]);
+  }, [isEquipmentChat]);
 
   useEffect(() => {
     const initializeChat = async () => {
@@ -204,7 +204,7 @@ const ChatComponent = ({
     };
 
     initializeChat();
-  }, [isEquipmentChat, product, user?.user_id]);
+  }, [isEquipmentChat]);
 
   const fetchRoomMessages = async (roomId) => {
     try {
@@ -218,7 +218,7 @@ const ChatComponent = ({
       );
       setMessages(response.data.messages);
       
-      const otherUserId = response.data.chatroom.members.find(id => id !== user.user_id);
+      const otherUserId = response.data.chatroom.members.find(id => id !== "1");
       if (otherUserId) {
         const userDetails = await fetchUserDetails(otherUserId);
         setOtherUser(userDetails);
@@ -238,7 +238,7 @@ const ChatComponent = ({
 
   useEffect(() => {
     const roomId = isEquipmentChat ? chatRoom?.chatroom : selectedRoom?.id;
-    if (!roomId || !user?.user_id) return;
+    if (!roomId ) return;
 
     if (ws && ws.readyState === WebSocket.OPEN) {
       ws.close();
@@ -271,7 +271,7 @@ const ChatComponent = ({
           });
         } 
         else if (data.type === "typing_status") {
-          if (data.user_id !== user.user_id) {
+          if (data.user_id !== "1") {
             setOtherUserTyping(data.typing);
           }
         }
@@ -299,7 +299,7 @@ const ChatComponent = ({
         clearTimeout(typingTimeoutRef.current);
       }
     };
-  }, [chatRoom?.chatroom, selectedRoom?.id, isEquipmentChat, user?.user_id]);
+  }, [chatRoom?.chatroom, selectedRoom?.id, isEquipmentChat]);
 
   const handleTyping = (isTyping) => {
     if (!ws || ws.readyState !== WebSocket.OPEN) return;
@@ -393,7 +393,7 @@ const ChatComponent = ({
   }, [messages]);
 
   const filteredChatRooms = chatRooms.filter(room => {
-    const otherUserId = room.members.find(id => id !== user.user_id);
+    const otherUserId = room.members.find(id => id !== "1");
     const receiver = receivers.find(r => r?.user_id === otherUserId);
     const displayName = receiver ? `${receiver.first_name} ${receiver.last_name}` : `User ${otherUserId?.slice(0, 5)}`;
     return displayName.toLowerCase().includes(searchTerm.toLowerCase());
