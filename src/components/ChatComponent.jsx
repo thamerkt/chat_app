@@ -244,7 +244,7 @@ const ChatComponent = ({
       ws.close();
     }
 
-    const websocket = new WebSocket(`ws://127.0.0.1:8002/ws/chatroom/${roomId}/1/`);
+    const websocket = new WebSocket(`wss://chat-service-phmb.onrender.com//ws/chatroom/${roomId}/1/`);
 
     websocket.onopen = () => {
       console.log("WebSocket connected");
