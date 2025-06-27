@@ -141,7 +141,7 @@ const ChatComponent = ({
     const fetchChatRoomsAndReceivers = async () => {
       try {
         const response = await axios.get(
-          `http://127.0.0.1:8002/api/chat/chat/user/1/`,
+          `https://chat-service-phmb.onrender.com/api/chat/chat/user/1/`,
           { withCredentials: true }
         );
         
@@ -175,7 +175,7 @@ const ChatComponent = ({
         setIsLoadingMessages(true);
 
         const createResponse = await axios.post(
-          "http://127.0.0.1:8002/api/chat/chat/",
+          "https://chat-service-phmb.onrender.com/api/chat/chat/",
           {
             sender_id: '1',
             receiver_id: getOtherUserId(),
@@ -185,7 +185,7 @@ const ChatComponent = ({
         setChatRoom(createResponse.data);
 
         const messagesResponse = await axios.get(
-          `http://127.0.0.1:8002/api/chat/room/${createResponse.data.chatroom}/`,
+          `https://chat-service-phmb.onrender.com/api/chat/room/${createResponse.data.chatroom}/`,
           {
             params: { user_id: 1 },
             withCredentials: true,
@@ -210,7 +210,7 @@ const ChatComponent = ({
     try {
       setIsLoadingMessages(true);
       const response = await axios.get(
-        `http://127.0.0.1:8002/api/chat/room/${roomId}/`,
+        `https://chat-service-phmb.onrender.com/api/chat/room/${roomId}/`,
         { 
           params: { user_id: 1 },
           withCredentials: true 
